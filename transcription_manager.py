@@ -11,8 +11,7 @@ import time
 import wave
 from langdetect import detect, DetectorFactory
 from io import BytesIO
-from audio_utils import remove_repeated_words  # Import shared utility
-from audio_utils import remove_overlap
+from audio_utils import remove_repeated_words
 
 # To repeat deterministic language detection across invocations
 DetectorFactory.seed = 0

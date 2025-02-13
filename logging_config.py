@@ -3,25 +3,25 @@ import sys
 
 def setup_logging(level=logging.INFO, log_file: str = None) -> None:
     """
-    Configura la salida de logs para el proyecto.
+    Configure logging output for the project.
     
-    Parámetros:
-      level   -- Nivel mínimo de los mensajes a registrar.
-      log_file -- Si se especifica, se registrarán también los mensajes en este archivo.
+    Parameters:
+      level    -- Minimum level of messages to record.
+      log_file -- If specified, messages will also be logged to this file.
     """
-    # Obtener el logger raíz y establecer el nivel
+    # Get root logger and set level
     logger = logging.getLogger()
     logger.setLevel(level)
 
-    # Definir el formateador de los mensajes
+    # Define message formatter
     formatter = logging.Formatter('[%(levelname)s] %(asctime)s - %(message)s')
 
-    # Configurar el handler de salida a consola
+    # Configure console output handler
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    # Opcional: Configurar un handler para un archivo de logs
+    # Optional: Configure handler for log file
     if log_file:
         file_handler = logging.FileHandler(log_file)
         file_handler.setFormatter(formatter)
