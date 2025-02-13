@@ -9,7 +9,7 @@ class Application(tk.Tk):
     def __init__(self, transcription_manager):
         super().__init__()
         self.transcription_manager = transcription_manager
-        self.title("Transcripción y Traducción en Tiempo Real")
+        self.title("Real-time Transcription and Translation")
         self.geometry("800x600")
         self.configure(bg="#f0f0f0")
         self.last_transcription = ""
@@ -21,36 +21,36 @@ class Application(tk.Tk):
         self.poll_results()
 
     def create_widgets(self):
-        title_label = tk.Label(self, text="Transcripción y Traducción en Tiempo Real",
+        title_label = tk.Label(self, text="Real-time Transcription and Translation",
                                font=("Helvetica", 18, "bold"), bg="#f0f0f0", fg="#333")
         title_label.pack(pady=10)
 
         control_frame = tk.Frame(self, bg="#f0f0f0")
         control_frame.pack(pady=5)
 
-        self.start_button = tk.Button(control_frame, text="Iniciar", command=self.start_transcription,
+        self.start_button = tk.Button(control_frame, text="Start", command=self.start_transcription,
                                       font=("Helvetica", 12), width=12, bg="#4CAF50", fg="white")
         self.start_button.grid(row=0, column=0, padx=10)
 
-        self.stop_button = tk.Button(control_frame, text="Detener", command=self.stop_transcription,
+        self.stop_button = tk.Button(control_frame, text="Stop", command=self.stop_transcription,
                                      font=("Helvetica", 12), width=12, bg="#F44336", fg="white", state=tk.DISABLED)
         self.stop_button.grid(row=0, column=1, padx=10)
 
-        idioma_label = tk.Label(control_frame, text="Idioma de salida:",
-                                font=("Helvetica", 12), bg="#f0f0f0", fg="#333")
-        idioma_label.grid(row=0, column=2, padx=5)
+        language_label = tk.Label(control_frame, text="Output Language:",
+                                  font=("Helvetica", 12), bg="#f0f0f0", fg="#333")
+        language_label.grid(row=0, column=2, padx=5)
 
         self.language_var = tk.StringVar(value=self.transcription_manager.target_language)
-        opciones = ["English", "Español", "Français", "Deutsch"]
-        idioma_menu = tk.OptionMenu(control_frame, self.language_var, *opciones, command=self.change_language)
-        idioma_menu.config(font=("Helvetica", 12), bg="#ddd")
-        idioma_menu.grid(row=0, column=3, padx=5)
+        options = ["English", "Spanish", "French", "German"]
+        language_menu = tk.OptionMenu(control_frame, self.language_var, *options, command=self.change_language)
+        language_menu.config(font=("Helvetica", 12), bg="#ddd")
+        language_menu.grid(row=0, column=3, padx=5)
 
-        self.clear_button = tk.Button(control_frame, text="Limpiar", command=self.clear_text,
+        self.clear_button = tk.Button(control_frame, text="Clear", command=self.clear_text,
                                       font=("Helvetica", 12), width=12, bg="#2196F3", fg="white")
         self.clear_button.grid(row=0, column=4, padx=10)
 
-        self.status_label = tk.Label(self, text="🔘 Inactivo | 0 palabras", font=("Helvetica", 12),
+        self.status_label = tk.Label(self, text="Inactive | 0 words", font=("Helvetica", 12),
                                      bg="#f0f0f0", fg="#555")
         self.status_label.pack(pady=5)
 
@@ -72,18 +72,18 @@ class Application(tk.Tk):
     def update_status(self, recording=False):
         text = self.text_area.get("1.0", tk.END)
         word_count = len(text.split())
-        status = f"🔴 Grabando... | {word_count} palabras" if recording else f"🔘 Inactivo | {word_count} palabras"
+        status = f"Recording... | {word_count} words" if recording else f"Inactive | {word_count} words"
         self.status_label.config(text=status)
 
     def change_language(self, new_language):
         self.transcription_manager.set_target_language(new_language)
-        self.status_label.config(text=f"Idioma actualizado a: {new_language}")
+        self.status_label.config(text=f"Language updated to: {new_language}")
 
     def start_transcription(self):
         self.transcription_manager.start()
         self.start_button.config(state=tk.DISABLED)
         self.stop_button.config(state=tk.NORMAL)
-        self.status_label.config(text="🔴 Grabando... | 0 palabras")
+        self.status_label.config(text="Recording... | 0 words")
         self.word_counter_running = True
         threading.Thread(target=self.word_counter, daemon=True).start()
 
@@ -91,12 +91,12 @@ class Application(tk.Tk):
         self.transcription_manager.stop()
         self.start_button.config(state=tk.NORMAL)
         self.stop_button.config(state=tk.DISABLED)
-        self.status_label.config(text="🔘 Inactivo | 0 palabras")
+        self.status_label.config(text="Inactive | 0 words")
         self.word_counter_running = False
 
     def clear_text(self):
         self.text_area.configure(state=tk.NORMAL)
-        self.text_area.delete(1.0, tk.END)
+        self.text_area.delete("1.0", tk.END)
         self.text_area.configure(state=tk.DISABLED)
         self.last_transcription = ""
         self.typing_queue = []
