@@ -21,12 +21,17 @@ logger = logging.getLogger(__name__)
 
 MODEL_ID = "openai/whisper-large-v3-turbo"
 TRANSLATION_MODELS = {
-    "Español": "Helsinki-NLP/opus-mt-en-es",
-    "Français": "Helsinki-NLP/opus-mt-en-fr",
-    "Deutsch": "Helsinki-NLP/opus-mt-en-de",
+    "Spanish": "Helsinki-NLP/opus-mt-en-es",
+    "French": "Helsinki-NLP/opus-mt-en-fr",
+    "German": "Helsinki-NLP/opus-mt-en-de",
     "English": None
 }
-TARGET_CODES = {"Español": "es", "Français": "fr", "Deutsch": "de", "English": "en"}
+TARGET_CODES = {
+    "English": "en",
+    "Spanish": "es",
+    "French": "fr",
+    "German": "de",
+}
 
 class TranscriptionManager:
     def __init__(self, batch_size=4, record_seconds=6, overlap_seconds=1.5):
@@ -64,7 +69,7 @@ class TranscriptionManager:
         )
         logger.info("Modelo de transcripción cargado correctamente.")
 
-        self.target_language = "Español"
+        self.target_language = "Spanish"
         self._init_translation_pipeline()
         self.translation_cache = {}
 
