@@ -11,8 +11,11 @@
 ## 📹 Demo
 
 Check out the demo video below:
+# Transcription
+[![Watch the video](https://img.youtube.com/vi/-lypvEV-zt4/mqdefault.jpg)](https://youtu.be/-lypvEV-zt4)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-lypvEV-zt4" frameborder="0" allowfullscreen></iframe>
+# Translation
+[![Watch the video](https://img.youtube.com/vi/ytvD_oIRmM4/mqdefault.jpg)](https://youtu.be/ytvD_oIRmM4)
 
 ---
 
@@ -146,4 +149,3 @@ This project is licensed under the **MIT License**.
 ### 🚀 **Start transcribing in real-time today!**
 ```bash
 python main.py
-```
