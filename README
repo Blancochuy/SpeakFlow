@@ -1,29 +1,28 @@
 ### 📜 **README.md**  
 
 ```markdown
-# 🎙️ Real-Time Speech Transcription & Translation
+# 🎙️ SpeakFlow
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Transformers](https://img.shields.io/badge/HuggingFace-Transformers-yellow.svg)
 
-**Real-Time Speech Transcription & Translation** is a powerful application that captures audio from your system in real-time, transcribes speech using OpenAI's **Whisper large-v3-turbo**, and translates it into multiple languages. This project is optimized for **low latency** and supports **CUDA acceleration** for fast processing on GPUs.
+**SpeakFlow** is a powerful real-time speech transcription and translation tool that seamlessly captures system audio, transcribes it using OpenAI's Whisper large-v3-turbo model, and provides instant translations. Built for speed with CUDA acceleration and an intuitive interface.
 
 ---
 
-## 🚀 Features
+## ✨ Key Features
 
-✔️ **Real-time transcription** from any audio source using **PyAudio loopback**.  
-✔️ **Multi-language support** – transcribes and translates speech into **English, Spanish, French, and German**.  
-✔️ **Noise reduction** with `noisereduce` to improve transcription accuracy.  
-✔️ **Optimized for speed** – utilizes **CUDA (GPU)** acceleration for fast inference.  
-✔️ **Typing animation** in the GUI for a more dynamic experience.  
-✔️ **Live word counter** to track real-time transcription.  
-✔️ **Clear and structured UI** using **Tkinter** with easy start/stop controls.  
+- 🎯 **Zero-latency Capture**: Records system audio in real-time via loopback
+- 🌍 **Multilingual**: Translates to English, Spanish, French, and German
+- 🔊 **Smart Audio Processing**: Automatic noise reduction and speech enhancement
+- ⚡ **GPU Accelerated**: Optimized performance with CUDA support
+- 💫 **Sleek Interface**: Smooth typing animations and word counting
+- 🧠 **Intelligent Processing**: Removes duplicates and handles overlapping text
 
 ---
 
-## 🛠️ Installation
+## 🚀 Quick Start
 
 ### 📌 Prerequisites
 Make sure you have **Python 3.8+** installed.
