@@ -8,6 +8,14 @@
 
 ---
 
+## 📹 Demo
+
+Check out the demo video below:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-lypvEV-zt4" frameborder="0" allowfullscreen></iframe>
+
+---
+
 ## ✨ Key Features
 
 - 🎯 **Zero-latency Capture**: Records system audio in real-time via loopback

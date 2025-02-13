@@ -4,3 +4,4 @@ transformers
 pyaudiowpatch
 noisereduce
 langdetect
+numpy
