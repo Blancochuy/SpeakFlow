@@ -1,6 +1,6 @@
-### 📜 **README.md**  
+### 📜 **README.md**
 
-```markdown
+
 # 🎙️ SpeakFlow
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
@@ -142,6 +142,3 @@ This project is licensed under the **MIT License**.
 ```bash
 python main.py
 ```
-```
-
----
