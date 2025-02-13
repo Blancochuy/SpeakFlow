@@ -49,14 +49,14 @@ class TranscriptionManager:
         if self.device != "cpu":
             torch.backends.cudnn.benchmark = True
 
-        logger.info("Cargando modelo y procesador para transcripción...")
+        logger.info("Loading model and processor for transcription...")
         self.processor = AutoProcessor.from_pretrained(MODEL_ID)
         self.model = AutoModelForSpeechSeq2Seq.from_pretrained(
             MODEL_ID, torch_dtype=self.torch_dtype, low_cpu_mem_usage=True
         ).to(self.device)
 
         if self.device != "cpu" and hasattr(torch, "compile"):
-            logger.info("Compilando modelo para reducir latencia...")
+            logger.info("Compailing model to reduce latency...")
             self.model = torch.compile(self.model)
 
         self.pipe = pipeline(
@@ -67,7 +67,7 @@ class TranscriptionManager:
             torch_dtype=self.torch_dtype,
             device=self.device,
         )
-        logger.info("Modelo de transcripción cargado correctamente.")
+        logger.info("Transcription model loaded.")
 
         self.target_language = "Spanish"
         self._init_translation_pipeline()
@@ -83,10 +83,11 @@ class TranscriptionManager:
                 device=self.device,
                 torch_dtype=self.torch_dtype
             )
-            logger.info(f"Pipeline de traducción para {self.target_language} cargado correctamente.")
+            logger.info(f"Translation pipeline for {self.target_language} loaded successfully.")
         else:
             self.translation_pipe = None
-            logger.info("Traducción desactivada (salida en English).")
+            logger.info("Translation disabled (output in English).")
+
 
     def set_target_language(self, new_language):
         self.target_language = new_language
@@ -99,14 +100,13 @@ class TranscriptionManager:
                     try:
                         default_speakers = p.get_default_wasapi_loopback()
                     except Exception as e:
-                        logger.error(f"Dispositivo de audio no encontrado: {e}")
+                        logger.error(f"Audio device not found: {e}. Retrying in 2 seconds...")
                         time.sleep(2)
                         continue
 
                     RATE = int(default_speakers["defaultSampleRate"])
                     CHANNELS = default_speakers["maxInputChannels"]
-                    logger.info(f"Grabando desde: {default_speakers['name']} (RATE: {RATE}, CHANNELS: {CHANNELS})")
-
+                    logger.info(f"Recording from: {default_speakers['name']} (RATE: {RATE}, CHANNELS: {CHANNELS})")
                     with p.open(
                         format=pyaudio.paInt16,
                         channels=CHANNELS,
@@ -114,7 +114,7 @@ class TranscriptionManager:
                         input=True,
                         input_device_index=default_speakers["index"],
                     ) as stream:
-                        logger.info("Grabando audio en loopback...")
+                        logger.info("Recording audio from loopback...")
                         frames = []
                         num_frames = int(RATE / 1024 * self.record_seconds)
                         for _ in range(num_frames):
@@ -126,7 +126,7 @@ class TranscriptionManager:
                         self.audio_queue.put((audio_bytes, RATE, CHANNELS))
                     time.sleep(self.overlap_seconds)
             except Exception as e:
-                logger.error(f"Error durante la grabación: {e}. Reintentando en 2 segundos...")
+                logger.error(f"Error during recording: {e}. Retrying in 2 seconds...")
                 time.sleep(2)
 
     def process_audio(self, audio_tuple):
@@ -151,7 +151,7 @@ class TranscriptionManager:
             audio_np = waveform.cpu().numpy()
             audio_np = nr.reduce_noise(y=audio_np, sr=target_sr)
             if np.abs(audio_np).max() < 0.01:
-                logger.warning("Segmento de audio descartado por bajo nivel de sonido.")
+                logger.warning("Audio segment discarded due to low sound level.")
                 return None
             return audio_np
         except Exception as e:
@@ -197,7 +197,7 @@ class TranscriptionManager:
                     for i, res in enumerate(results):
                         text = res.get("text", "").strip()
                         if not text:
-                            logger.warning("Transcripción vacía.")
+                            logger.warning("Empty transcription.")
                             continue
                         if self.target_language == "English":
                             final_texts[i] = remove_repeated_words(text)
@@ -223,11 +223,11 @@ class TranscriptionManager:
                             final_texts[indices_to_translate[j]] = trans_text
                     for text_final in final_texts:
                         if text_final:
-                            logger.info(f"Transcripción final: {text_final}")
+                            logger.info(f"Final transcription: {text_final}")
                             self.results_queue.put(text_final)
                             self.new_result_event.set()
                 except Exception as e:
-                    logger.error(f"Error en procesamiento batch: {e}")
+                    logger.error(f"Error in batch processing: {e}")
 
     def start(self):
         self.running = True
