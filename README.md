@@ -72,7 +72,7 @@ python main.py
 ## 📁 Project Structure
 
 ```
-Seamless-streamingDEMO/
+SpeakFLow/
 │
 ├── main.py               # Entry point (instantiates manager and GUI)
 ├── transcription_manager.py  # Contains the TranscriptionManager class
