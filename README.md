@@ -41,8 +41,8 @@ python --version
 
 ### 🔽 Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/realtime-transcription.git
-cd realtime-transcription
+git clone https://github.com/Blancochuy/SpeakFlow.git
+cd SpeakFlow
 ```
 
 ### 📦 Step 2: Create a Virtual Environment (Recommended)
@@ -129,7 +129,7 @@ SpeakFLow/
 ---
 
 ## 📜 License
-This project is licensed under the **MIT License**.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ---
 
